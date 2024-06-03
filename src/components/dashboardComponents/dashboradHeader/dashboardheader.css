@@ -1,0 +1,45 @@
+.dash-board-header-card {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.dashboard-header-first-card {
+  width: 40%;
+  display: flex;
+  gap: 2rem;
+}
+.dashboard-header-first-card > span {
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dashboard-header-second-card {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 2px solid red; */
+}
+
+.dashboard-header-second-card > input {
+  width: 80%;
+  height: 35px;
+  background-color: transparent;
+  border-radius: 20px;
+  border: 1px solid var(--input-border-color);
+  outline: none;
+  padding: 0px 10px;
+  font-size: 17px;
+}
+
+.dashboard-header-second-card > span {
+  border: 1px solid var(--input-border-color);
+  padding: 5px 8px;
+  border-radius: 30px;
+  cursor: pointer;
+}

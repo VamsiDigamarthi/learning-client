@@ -1,0 +1,68 @@
+.profile-single-card {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.profile-single-card > :nth-child(1) {
+  width: 50%;
+  /* border: 2px solid red; */
+}
+
+.profile-input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 50%;
+  padding: 40px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 10px;
+}
+
+.pic-card {
+  width: 80px;
+  height: 80px;
+  border-radius: 200px;
+  border: 1px solid lightslategray;
+}
+
+.profile-infor-form {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.single-input-label-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  position: relative;
+}
+
+.single-input-label-card > input {
+  width: 100%;
+  height: 35px;
+  border: 1px solid lightslategray;
+  border-radius: 4px;
+  background-color: transparent;
+  outline: none;
+  font-size: 18px;
+  padding: 0px 10px;
+}
+
+.profile-infor-form > button {
+  width: 130px;
+  height: 35px;
+  background-color: var(--btn-background);
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  color: #fff;
+  font-size: 17px;
+}

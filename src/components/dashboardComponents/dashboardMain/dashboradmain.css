@@ -1,0 +1,52 @@
+.dashboard-main-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.dash-board-first-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 100%;
+}
+
+.student-lag-score-display-card {
+  width: 55%;
+  /* border: 2px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* border: 2px solid red; */
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  height: 400px;
+  overflow-x: scroll;
+}
+
+.score-card-parents {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  overflow-x: scroll;
+}
+
+.exam-not-assigned-dashboard {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  /* border: 2px solid red; */
+}
+
+.exam-not-assigned-dashboard >h3{
+  color: orangered;
+}

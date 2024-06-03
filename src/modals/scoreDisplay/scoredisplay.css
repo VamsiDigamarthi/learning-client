@@ -1,0 +1,53 @@
+.score-display-main-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+}
+.score-display-modal-main {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 40px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.model-cross{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.display-score-sec{
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+}
+
+.display-score-sec>select{
+    width: 80%;
+    height: 37px;
+    background-color: transparent;
+    border: 1px solid grey;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+.display-score-sec > button{
+    width: 120px;
+    height: 37px;
+    background-color: orangered;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}

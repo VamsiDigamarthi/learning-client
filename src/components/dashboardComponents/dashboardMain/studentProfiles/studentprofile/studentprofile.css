@@ -1,0 +1,55 @@
+.student-profile-card {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* border: 2px solid red; */
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.student-viewall-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.student-viewall-card > span{
+  font-weight: bold;
+  color: orangered;
+  cursor: pointer;
+}
+
+.student-serach-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0px;
+}
+
+.student-serach-card > input {
+  width: 70%;
+  height: 35px;
+  background-color: transparent;
+  border: 1px solid var(--input-border-color);
+  border-radius: 20px;
+  padding: 0px 10px;
+}
+
+.dash-board-add-exams {
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.admin-student-not-found {
+  width: 100%;
+  height: 100%;
+  /* border: 2px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

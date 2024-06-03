@@ -1,0 +1,45 @@
+.quize-question-card {
+  width: 70%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.quize-question-card > h4 {
+  min-height: 120px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--input-border-color);
+}
+
+.quize-question-card > span {
+  padding: 10px 15px;
+  font-size: 17px;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.quize-prev-next-card {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.quize-prev-next-card > button {
+  width: 170px;
+  height: 40px;
+  background-color: var(--btn-background);
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 10px;
+}
+
+.show-diffecalty-level-card {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

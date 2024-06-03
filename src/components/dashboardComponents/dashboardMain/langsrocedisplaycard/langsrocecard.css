@@ -1,0 +1,71 @@
+.lang-scrore-card-main {
+  width: 30%;
+  border-radius: 20px;
+  padding: 10px;
+  /* #D2D4FF */
+  background-color: #d2d4ff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 50%;
+  padding: 15px;
+}
+
+.lang-logo-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+.show-score-card {
+  position: absolute;
+  top: 35px;
+  right: 0px;
+  padding: 10px;
+  width: 100%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 999;
+}
+
+.lang-logo-card > img {
+  width: 50px;
+  height: 40px;
+  border-radius: 30px;
+}
+
+.slider-bar-card {
+  width: 100%;
+  position: relative;
+  margin-top: 20px;
+}
+
+.slider-bar-card > :nth-child(1) {
+  width: 100%;
+  border-bottom: 3px solid grey;
+  border-radius: 10px;
+}
+
+.slider-bar-card > :nth-child(2) {
+  width: 50%;
+  border-bottom: 3px solid orangered;
+  position: absolute;
+  top: 0px;
+  border-radius: 10px;
+}
+
+.sider-bar-down-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sider-bar-down-card > :nth-child(2) {
+  font-size: 18px;
+  font-weight: bold;
+}

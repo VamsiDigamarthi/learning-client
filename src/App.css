@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+}
+
+:root {
+  --text-color: #ec5449;
+  --btn-background: #31064b;
+  --main-body-color: #f3f4f6;
+  --input-border-color: lightslategray;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.tost-cls {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+#erro-msg {
+  color: #ec5449;
+  font-size: 16px;
+}
+
+.cursor-not {
+  cursor: not-allowed;
+}
+
+.cursor-allowed {
+  cursor: pointer;
+}

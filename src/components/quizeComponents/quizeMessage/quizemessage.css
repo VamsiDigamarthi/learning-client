@@ -1,0 +1,46 @@
+.quize-start-message {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.quize-start-message > p {
+  font-size: 17px;
+  color: #0c1a1a;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.quize-selecetd-card {
+  width: 35%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quize-selecetd-card > select {
+  width: 50%;
+  height: 35px;
+  border: none;
+  border-radius: 10px;
+  background-color: transparent;
+  outline: none;
+  font-size: 16px;
+  /* border: 1px solid var(--input-border-color); */
+}
+
+.quize-start-message > button {
+  width: 170px;
+  height: 40px;
+  background-color: var(--btn-background);
+  border: none;
+  outline: none;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
