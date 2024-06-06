@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import "./dashboradmain.css";
 import StudentProfile from "./studentProfiles/studentprofile/StudentProfile";
 import LangsroceCard from "./langsrocedisplaycard/LangsroceCard";
-import { scrore } from "../../../data/userscore";
-import TimeShow from "./timeShow/TimeShow";
 const DashboardMain = () => {
   const [selectedStudentOnLeft, setSelectedStudentOnLeft] = useState();
-  console.log(selectedStudentOnLeft);
   return (
     <div className="dashboard-main-page">
       <div className="dash-board-first-card">
@@ -20,7 +17,6 @@ const DashboardMain = () => {
               <>
                 {selectedStudentOnLeft?.examDetails?.map((each, key) => (
                   <LangsroceCard
-                    // selectedStudentOnLeft={selectedStudentOnLeft}
                     key={key}
                     scrore={each}
                     examDetails={each}
@@ -36,7 +32,6 @@ const DashboardMain = () => {
           </div>
         </div>
       </div>
-      <TimeShow />
     </div>
   );
 };

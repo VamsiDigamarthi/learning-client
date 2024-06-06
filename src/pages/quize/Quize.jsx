@@ -12,7 +12,7 @@ const Quize = () => {
   // store the lang to send quize main components to filter that lang questions to display the quize
   const [lanTofilterQuestions, setLanToFilterQuestions] = useState("");
 
-  // console.log(lanTofilterQuestions);
+  console.log(lanTofilterQuestions);
 
   return (
     <div className="quize-main">

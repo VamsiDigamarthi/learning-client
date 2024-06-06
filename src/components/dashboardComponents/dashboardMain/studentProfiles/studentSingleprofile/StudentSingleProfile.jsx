@@ -5,7 +5,7 @@ const StudentSingleProfile = ({
   leftStudentSingleStudentClickToFetchStudent, // left side student click state  function
   student, // each student
 }) => {
-
+  console.log(student?.examDetails);
 
   return (
     <div
@@ -28,11 +28,23 @@ const StudentSingleProfile = ({
           <span>{student.language[0]}</span>
         </div>
       </div>
-      <span className={student?.examDetails?.[0]?.examComplete ? 'exam-completed':'exam-not-completed' }>
-        {student?.examDetails?.[0]?.examComplete
-          ? "Exam Completed"
-          : "Exam Not Writing"}
-      </span>
+      {student?.examDetails === undefined ? (
+        <span id="exam-not-assined">Exam Not Assigned</span>
+      ) : (
+        <>
+          <span
+            className={
+              student?.examDetails?.[0]?.examComplete
+                ? "exam-completed"
+                : "exam-not-completed"
+            }
+          >
+            {student?.examDetails?.[0]?.examComplete
+              ? "Exam Completed"
+              : "Exam Not Writing"}
+          </span>
+        </>
+      )}
     </div>
   );
 };

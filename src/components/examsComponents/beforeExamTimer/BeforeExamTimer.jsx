@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./beforeexamtimer.css";
 import { useNavigate } from "react-router-dom";
-const BeforeExamTimer = ({ examTime, lan }) => {
+const BeforeExamTimer = ({
+  examTime,
+  lan,
+  setShowMainExam,
+  setStartMainExamNotDisplaySideBar,
+  // requestFullScreen, //  request full screen mode
+}) => {
   const [timeDifference, setTimeDifference] = useState(
     getTimeDifference(examTime)
   );
@@ -34,7 +40,10 @@ const BeforeExamTimer = ({ examTime, lan }) => {
   }, [examTime]);
   // exam start btn click to navigate to main exam page
   const onStartExamBtnClickFun = () => {
-    navigate("/main-exam", { state: { lan }, replace: true });
+    setShowMainExam(true); // this state fun show main-exam
+    setStartMainExamNotDisplaySideBar(true); // this func is not display side bar
+    // requestFullScreen(); //  request full screen mode
+    // navigate("/main-exam", { state: { lan }, replace: true });
     // navigate("/main-exam", { replace: true });
   };
 

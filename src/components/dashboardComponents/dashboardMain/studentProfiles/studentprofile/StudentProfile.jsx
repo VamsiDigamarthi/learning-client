@@ -12,6 +12,9 @@ const StudentProfile = ({
   setSelectedStudentOnLeft,
 }) => {
   const UUU = useSelector((state) => state.authReducer.authData);
+
+  console.log(UUU);
+
   const [allStudents, setAllStudents] = useState([]);
   // filter by name
   const [filterName, setFilterName] = useState("");
@@ -22,9 +25,15 @@ const StudentProfile = ({
   // score display modal opne
   const [scoreDisplayModal, setScoreDisplayModal] = useState(false);
 
+  // login super admin to store admin-mail
+  const [storeAdminEmails, setStoreAdminEmails] = useState([]);
+
+  // store single mail to fetch student
+  const [adminSingleMail, setAdminSingleMail] = useState("");
+
   //get all students
-  const getAllStudentFun = () => {
-    APIS.get(`/admin/fetch/Students/${UUU?.email}`)
+  const getAllStudentFun = (mail) => {
+    APIS.get(`/admin/fetch/Students/${mail}`)
       .then((res) => {
         // console.log(res.data);
         setAllStudents(res.data);
@@ -35,13 +44,36 @@ const StudentProfile = ({
       });
   };
 
+  // login with super admin fetch all admins data
+
+  const fetchAllAdminData = () => {
+    APIS.get("/super/admin/data")
+      .then((res) => {
+        console.log(res.data);
+        setStoreAdminEmails(res.data);
+        // store first admin mail because fetch automatically student corresponding students
+        setAdminSingleMail(res.data[0]?.email);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   useEffect(() => {
-    getAllStudentFun();
+    UUU.role === 1 && fetchAllAdminData();
+    UUU && UUU.role === 2
+      ? getAllStudentFun(UUU.email)
+      : getAllStudentFun(adminSingleMail);
   }, []);
 
   // left side one student click that corresponding student details fetch
   const leftStudentSingleStudentClickToFetchStudent = (student) => {
     setSelectedStudentOnLeft(student);
+  };
+
+  // select admin mail to fetch students
+  const onSelectAdminEmailToFetchStudent = (e) => {
+    getAllStudentFun(e.target.value);
   };
 
   return (
@@ -50,6 +82,20 @@ const StudentProfile = ({
         <h3>Students</h3>
         <span onClick={() => setScoreDisplayModal(true)}>Score Display</span>
       </div>
+      {UUU.role === 1 && (
+        <div className="login-width-super-admin-show-select-admin">
+          <select onChange={onSelectAdminEmailToFetchStudent}>
+            <option disabled selected hidden>
+              SELECT INSTRUCTOR
+            </option>
+            {storeAdminEmails?.map((each, key) => (
+              <option key={key} value={each.email}>
+                {each.email}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
       <div className="student-serach-card">
         <input
           onChange={(e) => setFilterName(e.target.value?.trim())}
@@ -102,6 +148,7 @@ const StudentProfile = ({
         <ScoreDisplay
           allStudents={allStudents}
           setScoreDisplayModal={setScoreDisplayModal}
+          adminSingleMail={adminSingleMail} // this is store selected instructor mail if login with super admin
         />
       )}
     </div>

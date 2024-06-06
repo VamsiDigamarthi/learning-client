@@ -1,0 +1,94 @@
+.upload-pdf-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.upload-pdf-first-card,
+.upload-pdf-second-card {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  /* border: 2px solid red; */
+}
+
+.upload-pdf-first-card > section {
+  width: 26.5%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.upload-pdf-first-card > section > input {
+  width: 100%;
+  height: 35px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-size: 18px;
+  outline: none;
+  border-radius: 5px;
+  padding: 0px 10px;
+}
+
+.upload-pdf-first-card > :nth-child(2) {
+  width: 41%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.upload-pdf-first-card > div > select {
+  width: 100%;
+  height: 35px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-size: 18px;
+  outline: none;
+  border-radius: 5px;
+}
+
+.upload-pdf-main > :nth-child(2) > input {
+  width: 100%;
+  height: 35px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-size: 18px;
+  outline: none;
+  padding: 0px 10px;
+  border-radius: 5px;
+}
+
+.cursor-not-allower {
+  cursor: not-allowed !important;
+}
+
+/* second card */
+
+.upload-pdf-second-card > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* border: 2px solid red; */
+  /* width: 50%; */
+}
+
+.upload-pdf-second-card > div > img {
+  width: 80%;
+  /* border: 2px solid red; */
+  height: 200px;
+}
+.upload-pdf-main p {
+  color: red;
+}
+
+.date-wise-previw {
+  width: 100%;
+  border: 2px solid red;
+}

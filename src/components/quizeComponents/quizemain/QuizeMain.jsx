@@ -24,12 +24,13 @@ const QuizeMain = ({ lanTofilterQuestions }) => {
       `/student/get/Specific/MCQ/lan/${lanTofilterQuestions}/head/${UUU?.head}`
     )
       .then((res) => {
+        console.log(res.data);
         setMcqSpecificLan(res.data);
       })
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }, [lanTofilterQuestions]);
 
   /*
    when user click to right side number if that mcq already attemted not navigate to that mcq 
@@ -45,6 +46,8 @@ const QuizeMain = ({ lanTofilterQuestions }) => {
     setScoreModal(true);
     setScore(score);
   };
+
+  console.log(lanTofilterQuestions);
 
   return (
     <div className="quize-mcq-main">

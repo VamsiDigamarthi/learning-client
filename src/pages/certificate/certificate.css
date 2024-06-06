@@ -1,0 +1,415 @@
+@import url("https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap");
+.certificate-main-page {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.download-certificate {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.download-certificate > button {
+  width: fit-content;
+  padding: 10px;
+  background-color: orangered;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 10px;
+}
+
+.certificate-main-card {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  background-image: linear-gradient(
+    to bottom,
+    #ffffff,
+    #faece0b0,
+    #ffd9b5,
+    #faece0b0,
+    #ffffff
+  );
+}
+
+.top-left-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.5%;
+  height: 45%;
+  background-color: #0c1a1a;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 89%);
+}
+
+.top-top-card {
+  top: 0;
+  left: 0;
+  height: 3%;
+  width: 55%;
+  background-color: #0c1a1a;
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+  clip-path: polygon(0 0, 95% 0, 100% 100%, 0 100%);
+}
+
+.left-bottom-card {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #0c1a1a;
+  width: 3%;
+  height: 45%;
+  clip-path: polygon(0 0, 100% 15%, 100% 99%, 0 100%);
+}
+
+.left-bottom-second-card {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5%;
+  width: 35%;
+  background-color: #0c1a1a;
+  clip-path: polygon(0 0, 85% 0, 100% 100%, 0 100%);
+}
+
+.top-right-first-card {
+  width: 35%;
+  height: 6%;
+  background-color: #0c1a1a;
+  position: absolute;
+  top: 0;
+  right: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 100%);
+}
+
+.top-right-second-card {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #0c1a1a;
+  width: 3%;
+  height: 45%;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 85%);
+}
+.right-bottom-first-card {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 45%;
+  width: 1.5%;
+  background-color: #0c1a1a;
+  clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 100%);
+}
+
+.bottom-right-card {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 3%;
+  width: 55%;
+  background-color: #0c1a1a;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 5% 99%);
+}
+
+.top-right-color-first-card {
+  position: absolute;
+  top: 6%;
+  right: 3%;
+  width: 43%;
+  height: 2%;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 5% 100%);
+  background-image: linear-gradient(to right, #ff7c34, #ffae81);
+}
+
+.top-right-color-second-card {
+  position: absolute;
+  top: 6%;
+  right: 3%;
+  width: 1.2%;
+  height: 53%;
+  background-image: linear-gradient(to bottom, #ffae81, #ff7c34);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 96%);
+}
+
+.left-bottom-color-first-card {
+  position: absolute;
+  left: 3%;
+  bottom: 5%;
+  width: 1.2%;
+  height: 53%;
+  clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 100%);
+  background-image: linear-gradient(to bottom, #ff7c34, #ffae81);
+}
+
+.left-bottom-color-second-card {
+  position: absolute;
+  left: 3%;
+  bottom: 5%;
+  height: 2%;
+  width: 45%;
+  background-image: linear-gradient(to right, #ffae81, #ff7c34);
+
+  clip-path: polygon(0 0, 97% 0, 100% 100%, 0 100%);
+}
+
+.stand-it-win {
+  position: absolute;
+  top: 5.5%;
+  left: 42%;
+}
+
+.nuhvin-main-heading {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.address-card {
+  position: absolute;
+  top: 16%;
+  left: 0;
+  font-size: 15px;
+  font-weight: bold;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cin-card {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  font-size: 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.proud-card {
+  position: absolute;
+  top: 37%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 26px;
+}
+
+.main-name {
+  position: absolute;
+  top: 43%;
+  text-align: center;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Tangerine", cursive;
+  font-size: 29px;
+  font-weight: bold;
+}
+
+.full-stack-card {
+  position: absolute;
+  top: 54%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.full-stack-card > p {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.full-stack-card > p > span {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.demonstration {
+  position: absolute;
+  top: 59%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-weight: 500;
+}
+
+.dedication {
+  position: absolute;
+  top: 63%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-weight: 500;
+}
+
+.we-hope {
+  position: absolute;
+  top: 67%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-weight: 500;
+}
+
+.we-take {
+  position: absolute;
+  top: 71%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-weight: 500;
+}
+
+.left-side-author-card {
+  position: absolute;
+  bottom: 10%;
+  left: 10%;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+.left-side-author-card > hr {
+  width: 100%;
+}
+
+.right-side-author-card {
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.right-side-author-card > hr {
+  width: 100%;
+}
+
+.first-hexo {
+  color: rgba(255, 255, 255, 0.397);
+  position: absolute;
+  top: 40%;
+  left: 7%;
+  font-weight: normal;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.226);
+}
+
+.second-hexo {
+  color: rgba(24, 22, 22, 0.034);
+  position: absolute;
+  top: 40%;
+  left: 8.8%;
+}
+
+.first-cicle {
+  color: rgba(255, 255, 255, 0.226);
+  position: absolute;
+  top: 39%;
+  left: 7.3%;
+}
+
+.third-hexo {
+  color: rgba(255, 255, 255, 0.397);
+  position: absolute;
+  top: 20%;
+  left: 8%;
+  font-weight: normal;
+  font-size: 10px;
+  color: #faece0cb;
+}
+
+.fouth-hexo {
+  color: rgba(255, 255, 255, 0.226);
+  position: absolute;
+  top: 42%;
+  left: 30%;
+  font-weight: normal;
+  font-size: 10px;
+}
+
+.five-hexo {
+  color: rgba(255, 255, 255, 0.226);
+  position: absolute;
+  top: 22%;
+  left: 25%;
+  font-weight: normal;
+  font-size: 10px;
+}
+
+.six-hexo {
+  color: rgba(24, 22, 22, 0.034);
+  position: absolute;
+  top: 25%;
+  left: 22%;
+  font-weight: normal;
+  font-size: 10px;
+}
+
+.right-first-hexo {
+  color: rgba(24, 22, 22, 0.034);
+  position: absolute;
+  top: 26%;
+  right: 19%;
+}
+
+.second-cicle {
+  color: rgba(255, 255, 255, 0.226);
+  position: absolute;
+  top: 32%;
+  right: 13%;
+}
+
+.third-cicle {
+  color: rgba(255, 255, 255, 0.13);
+  position: absolute;
+  top: 40%;
+  right: 26%;
+}
+
+.seven-hexo {
+  position: absolute;
+  top: 44%;
+  right: 18%;
+  font-weight: normal;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.226);
+}
+
+.after-down-load-certificate-card {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

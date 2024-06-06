@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./mainexam.css";
 import { useSelector } from "react-redux";
 import { APIS } from "../../../core/apiurl";
-import { useLocation, useNavigate } from "react-router-dom";
-const MainExam = () => {
+const MainExam = ({
+  lan,
+  setShowMainExam,
+  setStartMainExamNotDisplaySideBar,
+  getStudentFun,
+}) => {
   const UUU = useSelector((state) => state.authReducer.authData);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const data = location.state;
 
   // store all mcs questions
   const [mcqSpecificLan, setMcqSpecificLan] = useState([]);
@@ -40,12 +41,10 @@ const MainExam = () => {
   // total marks
   const [totalMarks, setTotalMarks] = useState(0);
 
-  // ================================= full screen  =======================
-  // ================================= full screen end =====================
-
   useEffect(() => {
-    APIS.get(`/student/get/Specific/MCQ/lan/${data?.lan}/head/${UUU?.head}`)
+    APIS.get(`/student/get/Specific/MCQ/lan/${lan}/head/${UUU?.head}`)
       .then((res) => {
+        console.log(res.data);
         setMcqSpecificLan(res.data);
       })
       .catch((e) => {
@@ -183,18 +182,25 @@ const MainExam = () => {
     console.log(score);
     let obj = {
       id: UUU?._id,
-      lan: data?.lan,
+      lan: lan,
       score: score + lastQuestionScore,
       diffTimeString,
       totalTimeToDb,
       totalMarks,
     };
 
-    if (data?.lan !== undefined) {
+    console.log(obj);
+
+    if (lan !== undefined) {
       APIS.patch("/student/update/score", obj)
         .then((res) => {
-          // console.log(res.data);
-          navigate("/exam");
+          console.log(res.data);
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+          }
+          setShowMainExam(false);
+          setStartMainExamNotDisplaySideBar(false);
+          getStudentFun();
         })
         .catch((e) => {
           console.log(e);
@@ -221,8 +227,29 @@ const MainExam = () => {
     return filter[0]?.answer;
   };
 
+  // ================================= full screen  =======================
+
+  useEffect(() => {
+     const handleFullscreenChange = async () => {
+    if (!document.fullscreenElement) {
+      console.log("User exited full screen");
+      completedExam();
+    }
+
+  };
+
+  document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+  return () => {
+    document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  };
+  }, []);
+  
+
+  // ================================= full screen end =====================
+
   return (
-    <div  className="main-exam-card">
+    <div className="main-exam-card">
       <div className="main-exam-card-body">
         <div className="main-exam-card-body-left-side">
           <div className="show-diffecalty-level-card">

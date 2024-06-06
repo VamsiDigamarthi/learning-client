@@ -57,3 +57,11 @@
   color: brown;
   padding: 0px 20px;
 }
+.fullscreen-element {
+  width: 100%;
+  height: 100%;
+  background-color: white; /* Set background color to white or any other color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

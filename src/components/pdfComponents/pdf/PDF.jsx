@@ -4,27 +4,27 @@ import "./pdf.css";
 import pdfjs from "pdfjs-dist/build/pdf";
 import "pdfjs-dist/build/pdf.worker.min";
 import { APIS, serverUrl } from "../../../core/apiurl";
+import { useLocation } from "react-router-dom";
 
-function PDF(props) {
+function PDF() {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+
+  const data = {
+    lan: params.get("lan"),
+    title: params.get("title"),
+    previewImg: params.get("previewImg"),
+    date: params.get("date"),
+    pdf: params.get("image"),
+  };
+
   const [numPages, setNumPages] = useState();
   const [pageNumber, setPageNumber] = useState(1);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
-  const [pdfs, setPdfs] = useState([]);
 
-  let lan = "Java";
-  useEffect(() => {
-    APIS.get(`/super/pdf/${lan}`)
-      .then((res) => {
-        console.log(res.data);
-        setPdfs(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
   useEffect(() => {
     const preventContextMenu = (event) => {
       event.preventDefault();
@@ -36,10 +36,11 @@ function PDF(props) {
       document.removeEventListener("contextmenu", preventContextMenu);
     };
   }, []);
-  let p = `${serverUrl}/files/${pdfs[2]?.image}`;
+
+  let p = `${serverUrl}/${data?.pdf}`;
   return (
     <div className="pdf-div">
-      <p>
+      <p className="page-number-card">
         Page {pageNumber} of {numPages}
       </p>
       <Document file={p} onLoadSuccess={onDocumentLoadSuccess}>

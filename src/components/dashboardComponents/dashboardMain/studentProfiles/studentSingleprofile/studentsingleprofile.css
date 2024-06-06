@@ -23,7 +23,6 @@
 }
 
 .single-profile-card-main > span {
- 
   padding: 5px 10px;
   border-radius: 10px;
   min-width: 150px;
@@ -36,13 +35,18 @@
   /* border: 2px solid red; */
 }
 
-.selected-student-color{
+.selected-student-color {
   background-color: lightgrey;
 }
 
-.exam-completed{
+.exam-completed {
   background-color: greenyellow;
 }
-.exam-not-completed{
+.exam-not-completed {
   background-color: orange;
+}
+
+#exam-not-assined {
+  background-color: rgba(255, 0, 0, 0.719);
+  color: white;
 }

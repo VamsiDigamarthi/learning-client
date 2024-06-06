@@ -12,21 +12,23 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import Quize from "./pages/quize/Quize";
 import { useSelector } from "react-redux";
 import Exams from "./pages/exams/Exams";
-import MainExam from "./components/examsComponents/mainExam/MainExam";
 import Learning from "./pages/learning/Learning";
+import { useState } from "react";
+import PDF from "./components/pdfComponents/pdf/PDF";
+import Certificate from "./pages/certificate/Certificate";
 function App() {
   const UUU = useSelector((state) => state.authReducer.authData);
+
+  const [startMainExamNotDisplaySideBar, setStartMainExamNotDisplaySideBar] =
+    useState(false);
 
   return (
     <div className="App">
       <Router>
-        <SideScreen>
+        <SideScreen
+          startMainExamNotDisplaySideBar={startMainExamNotDisplaySideBar}
+        >
           <Routes>
-            {/* <Route
-              path="/"
-              element={UUU ? <Dashboard /> : <Navigate to="/registor" />}
-            /> */}
-
             <Route
               path="/"
               element={
@@ -57,15 +59,30 @@ function App() {
             />
             <Route
               path="/exam"
-              element={UUU ? <Exams /> : <Navigate to="/registor" />}
-            />
-            <Route
-              path="/main-exam"
-              element={UUU ? <MainExam /> : <Navigate to="/registor" />}
+              element={
+                UUU ? (
+                  <Exams
+                    setStartMainExamNotDisplaySideBar={
+                      setStartMainExamNotDisplaySideBar
+                    }
+                  />
+                ) : (
+                  <Navigate to="/registor" />
+                )
+              }
             />
             <Route
               path="/learning"
               element={UUU ? <Learning /> : <Navigate to="/registor" />}
+            />
+            <Route
+              path="/pdf"
+              element={UUU ? <PDF /> : <Navigate to="/registor" />}
+            />
+
+            <Route
+              path="/certificate"
+              element={UUU ? <Certificate /> : <Navigate to="/registor" />}
             />
           </Routes>
         </SideScreen>

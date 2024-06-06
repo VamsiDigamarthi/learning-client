@@ -103,7 +103,7 @@ const AddExamForStudent = ({
             {/* <option value="all">Exam give to all Students</option> */}
             {uniqueLanguage?.map((each, key) => (
               <option key={key} value={each}>
-                Exam Give to {each}
+                Exam Give to {each} Students
               </option>
             ))}
           </select>

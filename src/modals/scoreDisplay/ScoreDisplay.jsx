@@ -3,12 +3,16 @@ import "./scoredisplay.css";
 import { RxCross1 } from "react-icons/rx";
 import { useSelector } from "react-redux";
 import { APIS } from "../../core/apiurl";
-const ScoreDisplay = ({ setScoreDisplayModal, allStudents }) => {
+const ScoreDisplay = ({
+  setScoreDisplayModal,
+  allStudents,
+  adminSingleMail, // this is store selected instructor mail if login with super admin
+}) => {
   const UUU = useSelector((state) => state.authReducer.authData);
   //   uniqueLang Store
   const [uniqueLanguage, setUniqueLanguage] = useState([]);
   const [scoreDisplayStudentsByLan, setScoreDisplayStudentsByLan] = useState({
-    instructor: UUU?.email,
+    instructor: UUU && UUU.role === 2 ? UUU?.email : adminSingleMail,
   });
 
   useEffect(() => {
@@ -35,7 +39,7 @@ const ScoreDisplay = ({ setScoreDisplayModal, allStudents }) => {
     APIS.patch("/admin/score/display/student", scoreDisplayStudentsByLan)
       .then((res) => {
         console.log(res.data);
-        setScoreDisplayModal(false)
+        setScoreDisplayModal(false);
       })
       .catch((e) => {
         console.log(e);

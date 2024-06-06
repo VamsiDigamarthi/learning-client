@@ -50,7 +50,7 @@ const UploadMCQs = ({ change, heading }) => {
         })
         .catch((e) => {
           console.log(e);
-          // errorMsgApi(e?.response?.data?.message);
+          errorMsgApi(e?.response?.data?.message);
         });
     } else {
       APIS.post("/super/bulk/Students", excelData)
