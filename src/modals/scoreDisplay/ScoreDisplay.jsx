@@ -46,6 +46,8 @@ const ScoreDisplay = ({
       });
   };
 
+  console.log(adminSingleMail);
+
   return (
     <section className="score-display-main-card">
       <section className="score-display-modal-main">
@@ -53,19 +55,25 @@ const ScoreDisplay = ({
           <h3>display score</h3>
           <RxCross1 onClick={() => setScoreDisplayModal(false)} />
         </section>
-        <form onSubmit={scoreDisplayApi} className="display-score-sec">
-          <select onChange={onSelectLanToAddExamToStudent}>
-            <option disabled hidden selected>
-              SELECT LANGUAGE
-            </option>
-            {uniqueLanguage?.map((each, key) => (
-              <option key={key} value={each}>
-                score display to {each}
+        {adminSingleMail?.length > 0 ? (
+          <form onSubmit={scoreDisplayApi} className="display-score-sec">
+            <select onChange={onSelectLanToAddExamToStudent}>
+              <option disabled hidden selected>
+                SELECT LANGUAGE
               </option>
-            ))}
-          </select>
-          <button type="submit">Submit</button>
-        </form>
+              {uniqueLanguage?.map((each, key) => (
+                <option key={key} value={each}>
+                  score display to {each}
+                </option>
+              ))}
+            </select>
+            <button type="submit">Submit</button>
+          </form>
+        ) : (
+          <>
+            <h3>Please select instructor </h3>
+          </>
+        )}
       </section>
     </section>
   );

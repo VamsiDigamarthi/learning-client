@@ -33,7 +33,7 @@ const LangsroceCard = ({ examDetails }) => {
           }}
         ></p>
       </div>
-      {examDetails?.diffTimeString && <h5>Total Time {" "}{examDetails?.diffTimeString}</h5>}
+      {/* {examDetails?.diffTimeString && <h5>Total Time {" "}{examDetails?.diffTimeString}</h5>} */}
       <div className="sider-bar-down-card">
         {examDetails.score >= 0 || examDetails.totalMarks ? (
           <>

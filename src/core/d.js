@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./exams.css";
-
 import { APIS } from "../../core/apiurl";
 import { useSelector } from "react-redux";
 import ExamsNotAssignMessage from "../../components/examsComponents/examsnotassignmessage/ExamsNotAssignMessage";
@@ -89,7 +88,7 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
 
   useEffect(() => {
     const fetchMcq = () => {
-      console.log(student?.examDetails?.[0]?.lan);
+      console.log(student?.examDetails[0]?.lan);
       APIS.get(
         `/student/get/Specific/MCQ/lan/${student?.examDetails?.[0]?.lan}/head/${UUU?.head}`
       )
@@ -127,6 +126,53 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
     mcqSpecificLan?.length > 0 && calTime();
   }, [mcqSpecificLan]);
 
+  // completed exam
+  const completedExam = (lastQuestionScore = 0) => {
+    console.log("ghjkl");
+    console.log(storeAnswerWithIds);
+    // calculate time difference total time minute to how much time to writing exam
+    const totalSeconds1 = parseTimeStringToSeconds(
+      `${hours}:${minutes}:${seconds}`
+    );
+    console.log(totalSeconds1);
+    const totalSeconds2 = parseTimeStringToSeconds(totalTimeToDb);
+    const diffInSeconds = totalSeconds2 - totalSeconds1;
+    const diffTimeString = formatSecondsToTimeString(diffInSeconds);
+
+    // calculate score
+    // let score = 0;
+    // console.log(storeAnswerWithIds);
+    // storeAnswerWithIds.forEach((each) => (score += each.correct));
+    let score = 0;
+    storeAnswerWithIdsRef.current.forEach((each) => (score += each.correct));
+    console.log(score);
+    console.log(diffTimeString);
+    let obj = {
+      id: UUU?._id,
+      lan: student?.examDetails[0]?.lan,
+      score: score + lastQuestionScore,
+      diffTimeString,
+      totalTimeToDb: totalTimeToDbRef.current,
+      totalMarks,
+    };
+
+    console.log(obj);
+
+    APIS.patch("/student/update/score", obj)
+      .then((res) => {
+        console.log(res.data);
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        }
+        setShowMainExam(false);
+        setStartMainExamNotDisplaySideBar(false);
+        getStudentFun();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   useEffect(() => {
     const timerClre = setInterval(() => {
       setTime((prevTime) => {
@@ -149,13 +195,7 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
   const minutes = Math.floor((time % 3600) / 60);
   const seconds = time % 60;
 
-  const updateAnswerWithId = (
-    id,
-    answer,
-    correctAnswer,
-    defaultMarks,
-    question
-  ) => {
+  const updateAnswerWithId = (id, answer, correctAnswer, defaultMarks) => {
     setShowAnswerWithIds((prevAnswers) => {
       const idExists = prevAnswers.some((item) => item.id === id);
 
@@ -166,21 +206,13 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
                 ...item,
                 answer,
                 correct: correctAnswer === answer ? defaultMarks : 0,
-                correctAnswer,
-                question,
               }
             : item
         );
       } else {
         return [
           ...prevAnswers,
-          {
-            id,
-            answer,
-            correct: correctAnswer === answer ? defaultMarks : 0,
-            correctAnswer,
-            question,
-          },
+          { id, answer, correct: correctAnswer === answer ? defaultMarks : 0 },
         ];
       }
     });
@@ -191,32 +223,27 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
     timeRef.current = time;
   }, [storeAnswerWithIds, time]);
 
-  // user click the answer button
-  const userClickAnsweButton = (answer) => {
-    if (answer !== null) {
-      // green color state
-      console.log(answer);
-      setIdsMCQAttend([...idsMCQAttend, mcqSpecificLan[mcqCount]]);
-
-      updateAnswerWithId(
-        mcqSpecificLan[mcqCount]?._id,
-        answer,
-        mcqSpecificLan[mcqCount]?.CorrectAnswer,
-        mcqSpecificLan[mcqCount]?.DefaultMarks,
-        mcqSpecificLan[mcqCount]?.Question
-      );
-      setUserAnswer(null);
-    } else {
-      setNotAttemptAnswerShowQuestion([
-        ...notAttemptAnswerShowQuestion,
-        mcqSpecificLan[mcqCount],
-      ]);
-    }
-  };
-
   const onHandelNextQuestion = () => {
     if (mcqCount < mcqSpecificLan?.length - 1) {
       setMcqCount((pre) => pre + 1);
+      if (userAnswer !== null) {
+        // green color state
+        console.log(userAnswer);
+        setIdsMCQAttend([...idsMCQAttend, mcqSpecificLan[mcqCount]]);
+
+        updateAnswerWithId(
+          mcqSpecificLan[mcqCount]?._id,
+          userAnswer,
+          mcqSpecificLan[mcqCount]?.CorrectAnswer,
+          mcqSpecificLan[mcqCount]?.DefaultMarks
+        );
+        setUserAnswer(null);
+      } else {
+        setNotAttemptAnswerShowQuestion([
+          ...notAttemptAnswerShowQuestion,
+          mcqSpecificLan[mcqCount],
+        ]);
+      }
     }
   };
 
@@ -239,45 +266,6 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   }
 
-  // completed exam
-  const completedExam = (lastQuestionScore = 0) => {
-    console.log(storeAnswerWithIds);
-    // calculate time difference total time minute to how much time to writing exam
-    const totalSeconds1 = parseTimeStringToSeconds(
-      `${hours}:${minutes}:${seconds}`
-    );
-    const totalSeconds2 = parseTimeStringToSeconds(totalTimeToDb);
-    const diffInSeconds = totalSeconds2 - totalSeconds1;
-    const diffTimeString = formatSecondsToTimeString(diffInSeconds);
-
-    let score = 0;
-    storeAnswerWithIdsRef.current.forEach((each) => (score += each.correct));
-
-    let obj = {
-      id: UUU?._id,
-      lan: student?.examDetails?.[0]?.lan,
-      score: score + lastQuestionScore,
-      diffTimeString,
-      totalTimeToDb: totalTimeToDbRef.current,
-      totalMarks,
-      completedDetails: storeAnswerWithIdsRef.current,
-    };
-
-    APIS.patch("/student/update/score", obj)
-      .then((res) => {
-        console.log(res.data);
-        if (document.fullscreenElement) {
-          document.exitFullscreen();
-        }
-        setShowMainExam(false);
-        setStartMainExamNotDisplaySideBar(false);
-        getStudentFun();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
   const onSubmittedAllMcqScoreFun = () => {
     console.log(userAnswer);
 
@@ -287,6 +275,9 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
     );
   };
 
+  // console.log(storeAnswerWithIds);
+  // console.log(idsMCQAttend);
+  // console.log(userAnswer);
   // ============================ full screen exist =====================
 
   return (
@@ -298,7 +289,7 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
             setStartMainExamNotDisplaySideBar={
               setStartMainExamNotDisplaySideBar
             }
-            lan={student?.examDetails?.[0]?.lan}
+            lan={student?.examDetails[0]?.lan}
             getStudentFun={getStudentFun}
             //
             hours={hours}
@@ -315,7 +306,6 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
             onRightSideClickAnyRandomNumber={onRightSideClickAnyRandomNumber}
             onSubmittedAllMcqScoreFun={onSubmittedAllMcqScoreFun}
             completedExam={completedExam}
-            userClickAnsweButton={userClickAnsweButton} // user give answer to take
           />
         </div>
       ) : (

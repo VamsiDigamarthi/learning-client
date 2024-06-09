@@ -3,7 +3,7 @@ import "./beforeexamtimer.css";
 import { useNavigate } from "react-router-dom";
 const BeforeExamTimer = ({
   examTime,
-  lan,
+
   setShowMainExam,
   setStartMainExamNotDisplaySideBar,
   // requestFullScreen, //  request full screen mode

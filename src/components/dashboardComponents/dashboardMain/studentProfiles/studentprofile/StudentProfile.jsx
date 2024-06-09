@@ -13,8 +13,6 @@ const StudentProfile = ({
 }) => {
   const UUU = useSelector((state) => state.authReducer.authData);
 
-  console.log(UUU);
-
   const [allStudents, setAllStudents] = useState([]);
   // filter by name
   const [filterName, setFilterName] = useState("");
@@ -49,7 +47,6 @@ const StudentProfile = ({
   const fetchAllAdminData = () => {
     APIS.get("/super/admin/data")
       .then((res) => {
-        console.log(res.data);
         setStoreAdminEmails(res.data);
         // store first admin mail because fetch automatically student corresponding students
         setAdminSingleMail(res.data[0]?.email);

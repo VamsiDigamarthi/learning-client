@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
-import "./uploadmcqs.css";
+import "./uploadcertificatestudents.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as XLSX from "xlsx";
 import { APIS } from "../../../core/apiurl";
 import { errorMsgApi, succesMsgApi } from "../../../core/tost";
-const UploadMCQs = ({ change, heading }) => {
+const UploadCertificateStudents = () => {
   const [excelFile, setExcelFile] = useState(null);
   const [excelData, setExcelData] = useState([]);
-  const [loader, setLoader] = useState(false);
+
+  const convertExcelDate = (excelSerial) => {
+    const excelEpoch = new Date(1899, 11, 30); // Excel's epoch date
+    const date = new Date(excelEpoch.getTime() + excelSerial * 86400000); // 86400000 is the number of milliseconds in a day
+
+    const day = ("0" + date.getDate()).slice(-2);
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
+  };
+
   // use Effect
   useEffect(() => {
     if (excelFile !== null) {
@@ -16,7 +27,14 @@ const UploadMCQs = ({ change, heading }) => {
       const worksheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[worksheetName];
       const data = XLSX.utils.sheet_to_json(worksheet);
-      setExcelData(data);
+      // Convert date fields
+      const convertedData = data.map((row) => ({
+        ...row,
+        startingDate: convertExcelDate(row.startingDate),
+        endingDate: convertExcelDate(row.endingDate),
+      }));
+      // setExcelData(data);
+      setExcelData(convertedData);
       // console.log(data);
     }
   }, [excelFile]);
@@ -41,43 +59,21 @@ const UploadMCQs = ({ change, heading }) => {
   };
 
   const onHandleBulkUpload = () => {
-    if (change === "mcq") {
-      setLoader(true);
-      APIS.post("/super/mcqBulkUpload", excelData)
-        .then((res) => {
-          console.log(res.data);
-          alert(res?.data?.message);
-          setExcelData([]);
-          setLoader(false);
-        })
-        .catch((e) => {
-          console.log(e);
-          setLoader(false);
-          alert(e?.response?.data?.message);
-        });
-    } else {
-      setLoader(true);
-      APIS.post("/super/bulk/Students", excelData)
-        .then((res) => {
-          console.log(res.data);
-          alert(res?.data?.message);
-          // succesMsgApi(res?.data?.message);
-          setExcelData([]);
-          setLoader(false);
-        })
-        .catch((e) => {
-          setLoader(false);
-          console.log(e);
-          alert(e?.response?.data?.message);
-        });
-    }
+    // console.log(excelData);
+    APIS.post("/super/bulk/certificate/students", excelData)
+      .then((res) => {
+        console.log(res.data);
+        alert(res?.data?.message);
+      })
+      .catch((e) => {
+        console.log(e);
+        alert(e?.response?.data?.message);
+      });
   };
-
-  console.log(loader);
 
   return (
     <div className="mcq-card">
-      <h3>{heading}</h3>
+      <h3>Upload Certificate Students</h3>
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
@@ -102,7 +98,7 @@ const UploadMCQs = ({ change, heading }) => {
           style={{
             cursor: excelData.length === 0 && "not-allowed",
           }}
-          disabled={excelData?.length === 0 || loader}
+          disabled={excelData?.length === 0}
           onClick={onHandleBulkUpload}
         >
           Submit
@@ -112,4 +108,4 @@ const UploadMCQs = ({ change, heading }) => {
   );
 };
 
-export default UploadMCQs;
+export default UploadCertificateStudents;

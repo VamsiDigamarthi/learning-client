@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IoIosLogOut } from "react-icons/io";
 import { logout } from "../../redux/action/AuthAction";
 import { PiCertificateThin } from "react-icons/pi";
+import { SiPytest } from "react-icons/si";
 // import { logout } from "../../action/AuthAction";
 const SideScreen = ({ startMainExamNotDisplaySideBar, children }) => {
   const location = useLocation();
@@ -26,7 +27,8 @@ const SideScreen = ({ startMainExamNotDisplaySideBar, children }) => {
     <div className="home-main">
       {pathValue !== "/registor" &&
         startMainExamNotDisplaySideBar !== true &&
-        pathValue !== "/certificate" && (
+        pathValue !== "/certificate" &&
+        pathValue !== "/intership" && (
           <div className="sidebar-left-side">
             <span
               style={{
@@ -37,6 +39,10 @@ const SideScreen = ({ startMainExamNotDisplaySideBar, children }) => {
             >
               NGS
             </span>
+            <div className="profile-images">
+              <img src="images/profile-pic.png" alt="profile-pic" />
+              <h4>{UUU?.firstName}</h4>
+            </div>
             {UUU?.role === 1 ? (
               <Link to="/" className="link-card">
                 <LuLayoutDashboard />
@@ -78,10 +84,25 @@ const SideScreen = ({ startMainExamNotDisplaySideBar, children }) => {
               </Link>
             )}
 
+            {UUU?.role === 3 && (
+              <Link to="/intership" className="link-card">
+                <SiPytest />
+                <span>Intership certificate</span>
+              </Link>
+            )}
+
+            {UUU?.role === 3 && (
+              <Link to="/yourtests" className="link-card">
+                <SiPytest />
+                <span>Your Test</span>
+              </Link>
+            )}
+
             <Link to="/profile" className="link-card">
               <RiProgress5Line />
               <span>Profile</span>
             </Link>
+
             <button onClick={() => handleLogOut()} className="logout-btn">
               <span>
                 <IoIosLogOut size={20} />

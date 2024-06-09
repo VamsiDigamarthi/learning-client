@@ -26,7 +26,7 @@ const AddExamForStudent = ({
     );
     const uniqueLanguagesSet = new Set(allLanguages);
     const uniqueLanguages = [...uniqueLanguagesSet];
-    console.log(uniqueLanguages);
+
     setUniqueLanguage(uniqueLanguages);
   }, []);
 
@@ -54,13 +54,11 @@ const AddExamForStudent = ({
     if (storeAllDataToExam?.dateAndTime !== "") {
       APIS.put("/admin/add/exam/student", storeAllDataToExam)
         .then((res) => {
-          console.log(res.data);
           succesMsgApi(res.data);
           setAddExamModalOpen(false);
           getAllStudentFun();
         })
         .catch((e) => {
-          console.log(e);
           errorMsgApi("Something went wrong please try agint later");
           setAddExamModalOpen(false);
         });

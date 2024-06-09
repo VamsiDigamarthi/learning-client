@@ -15,14 +15,14 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   position: relative;
 }
 
 .logout-btn {
   position: absolute;
-  bottom: 10%;
-  left: 15%;
+  bottom: 5%;
+  left: 10%;
   display: flex;
   gap: 1rem;
   background-color: transparent;
@@ -49,4 +49,31 @@
   text-decoration: none;
   color: orangered;
   font-size: 18px;
+}
+.link-card:hover{
+  background-color: orangered;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.profile-images{
+  width: 100%;
+  height: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.profile-images>img{
+  width: 50%;
+  height: 80%;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-images>h4{
+  color: white;
+
 }

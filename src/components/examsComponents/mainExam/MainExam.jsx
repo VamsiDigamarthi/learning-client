@@ -1,212 +1,24 @@
 import React, { useEffect, useState } from "react";
 import "./mainexam.css";
-import { useSelector } from "react-redux";
-import { APIS } from "../../../core/apiurl";
+
 const MainExam = ({
-  lan,
-  setShowMainExam,
-  setStartMainExamNotDisplaySideBar,
-  getStudentFun,
+  hours,
+  minutes,
+  seconds,
+  mcqCount,
+  mcqSpecificLan,
+  setUserAnswer,
+  onHandelNextQuestion,
+  idsMCQAttend,
+  notAttemptAnswerShowQuestion,
+  storeAnswerWithIds,
+  userAnswer,
+  onRightSideClickAnyRandomNumber,
+  onSubmittedAllMcqScoreFun,
+  completedExam,
+  userClickAnsweButton,
 }) => {
-  const UUU = useSelector((state) => state.authReducer.authData);
-
-  // store all mcs questions
-  const [mcqSpecificLan, setMcqSpecificLan] = useState([]);
-
-  // show score modal
-  // const [scoreModal, setScoreModal] = useState(false);
-
-  const [mcqCount, setMcqCount] = useState(0);
-
-  // total time
-  const [totalTime, setTotalTime] = useState(null);
-  const [time, setTime] = useState(null);
-
-  // store users click answers
-  const [userAnswer, setUserAnswer] = useState(null);
-
-  // store the ids for change color of right side number if user that question attempted or not like ""green"" color
-  const [idsMCQAttend, setIdsMCQAttend] = useState([]);
-
-  // store ids user see the question but not attempt any asnwer like ""orange"" color
-  const [notAttemptAnswerShowQuestion, setNotAttemptAnswerShowQuestion] =
-    useState([]);
-
-  // stores answer with mcqIds because right side jump to random question to show there pick up answer
-  const [storeAnswerWithIds, setShowAnswerWithIds] = useState([]);
-
-  // to tell backend storage to how much totla time this exam
-  const [totalTimeToDb, setTotalTimeToDb] = useState("");
-
-  // total marks
-  const [totalMarks, setTotalMarks] = useState(0);
-
-  useEffect(() => {
-    APIS.get(`/student/get/Specific/MCQ/lan/${lan}/head/${UUU?.head}`)
-      .then((res) => {
-        console.log(res.data);
-        setMcqSpecificLan(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
-
-  // calculate total time based on each mcq second
-  useEffect(() => {
-    let time = 0;
-    let totalMarks = 0;
-
-    mcqSpecificLan?.forEach((each) => {
-      time += each.DefaultTimeToSolve;
-      totalMarks += each.DefaultMarks;
-    });
-
-    setTotalTime(time);
-    setTime(time);
-    setTotalMarks(totalMarks);
-
-    const hours = Math.floor(time / 3600);
-    const minutes = Math.floor((time % 3600) / 60);
-    const seconds = time % 60;
-    setTotalTimeToDb(`${hours}:${minutes}:${seconds}`);
-  }, [mcqSpecificLan]);
-  // console.log(mcqSpecificLan);
-  useEffect(() => {
-    const timerClre = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime <= 0) {
-          clearInterval(timerClre);
-          console.log("time out");
-          // setScoreModal(true);
-          completedExam();
-          return 0;
-        } else {
-          return prevTime - 1;
-        }
-      });
-    }, 1000);
-
-    return () => clearInterval(timerClre); // Cleanup the interval on unmount
-  }, [totalTime]);
-  // Convert total seconds to hours, minutes, and seconds
-  const hours = Math.floor(time / 3600);
-  const minutes = Math.floor((time % 3600) / 60);
-  const seconds = time % 60;
-
-  const updateAnswerWithId = (id, answer, correctAnswer, defaultMarks) => {
-    setShowAnswerWithIds((prevAnswers) => {
-      const idExists = prevAnswers.some((item) => item.id === id);
-
-      if (idExists) {
-        return prevAnswers.map((item) =>
-          item.id === id
-            ? {
-                ...item,
-                answer,
-                correct: correctAnswer === answer ? defaultMarks : 0,
-              }
-            : item
-        );
-      } else {
-        return [
-          ...prevAnswers,
-          { id, answer, correct: correctAnswer === answer ? defaultMarks : 0 },
-        ];
-      }
-    });
-  };
-
-  const onHandelNextQuestion = () => {
-    if (mcqCount < mcqSpecificLan?.length - 1) {
-      setMcqCount((pre) => pre + 1);
-      if (userAnswer !== null) {
-        // green color state
-        console.log(userAnswer);
-        setIdsMCQAttend([...idsMCQAttend, mcqSpecificLan[mcqCount]]);
-
-        updateAnswerWithId(
-          mcqSpecificLan[mcqCount]?._id,
-          userAnswer,
-          mcqSpecificLan[mcqCount]?.CorrectAnswer,
-          mcqSpecificLan[mcqCount]?.DefaultMarks
-        );
-        setUserAnswer(null);
-      } else {
-        setNotAttemptAnswerShowQuestion([
-          ...notAttemptAnswerShowQuestion,
-          mcqSpecificLan[mcqCount],
-        ]);
-      }
-    }
-  };
-
   // to calculate total time taken to student writing an exam
-  function parseTimeStringToSeconds(timeString) {
-    const [hours, minutes, seconds] = timeString.split(":").map(Number);
-    return hours * 3600 + minutes * 60 + seconds;
-  }
-
-  // Function to format seconds into HH:MM:SS format
-  function formatSecondsToTimeString(totalSeconds) {
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    const pad = (num) => String(num).padStart(2, "0"); // Pad with leading zeros if needed
-
-    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-  }
-  const onSubmittedAllMcqScoreFun = () => {
-    console.log(userAnswer);
-
-    completedExam(
-      mcqSpecificLan[mcqCount]?.CorrectAnswer === userAnswer &&
-        mcqSpecificLan[mcqCount]?.DefaultMarks
-    );
-  };
-
-  const completedExam = (lastQuestionScore = 0) => {
-    // calculate time difference total time minute to how much time to writing exam
-    const totalSeconds1 = parseTimeStringToSeconds(
-      `${hours}:${minutes}:${seconds}`
-    );
-    const totalSeconds2 = parseTimeStringToSeconds(totalTimeToDb);
-    const diffInSeconds = totalSeconds2 - totalSeconds1;
-    const diffTimeString = formatSecondsToTimeString(diffInSeconds);
-
-    // calculate score
-    let score = 0;
-    console.log(storeAnswerWithIds);
-    storeAnswerWithIds.forEach((each) => (score += each.correct));
-    console.log(score);
-    let obj = {
-      id: UUU?._id,
-      lan: lan,
-      score: score + lastQuestionScore,
-      diffTimeString,
-      totalTimeToDb,
-      totalMarks,
-    };
-
-    console.log(obj);
-
-    if (lan !== undefined) {
-      APIS.patch("/student/update/score", obj)
-        .then((res) => {
-          console.log(res.data);
-          if (document.fullscreenElement) {
-            document.exitFullscreen();
-          }
-          setShowMainExam(false);
-          setStartMainExamNotDisplaySideBar(false);
-          getStudentFun();
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  };
 
   // check is  single digit or not function
   const onCheckIssingleDigitOrNot = (digit) => {
@@ -216,9 +28,6 @@ const MainExam = ({
       return `${digit}`;
     }
   };
-
-  // use click any random numbers in right side func
-  const onRightSideClickAnyRandomNumber = (number) => setMcqCount(number);
 
   const pre = () => {
     let filter = storeAnswerWithIds.filter(
@@ -230,23 +39,25 @@ const MainExam = ({
   // ================================= full screen  =======================
 
   useEffect(() => {
-     const handleFullscreenChange = async () => {
-    if (!document.fullscreenElement) {
-      console.log("User exited full screen");
-      completedExam();
-    }
+    const handleFullscreenChange = async () => {
+      if (!document.fullscreenElement) {
+        console.log("User exited full screen");
+        completedExam();
+      }
+    };
 
-  };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
 
-  document.addEventListener("fullscreenchange", handleFullscreenChange);
-
-  return () => {
-    document.removeEventListener("fullscreenchange", handleFullscreenChange);
-  };
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
   }, []);
-  
 
   // ================================= full screen end =====================
+
+  const onAnswerClick = (answer) => {
+    userClickAnsweButton(answer);
+  };
 
   return (
     <div className="main-exam-card">
@@ -279,7 +90,7 @@ const MainExam = ({
                 color:
                   pre() === each ? "#ff5900" : userAnswer === each && "green",
               }}
-              onClick={() => setUserAnswer(each)}
+              onClick={() => onAnswerClick(each)}
               key={key}
             >
               {key === 0 ? "A." : key === 1 ? "B." : key === 2 ? "C." : "D."}{" "}

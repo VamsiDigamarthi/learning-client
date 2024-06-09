@@ -16,6 +16,8 @@ import Learning from "./pages/learning/Learning";
 import { useState } from "react";
 import PDF from "./components/pdfComponents/pdf/PDF";
 import Certificate from "./pages/certificate/Certificate";
+import YourTest from "./pages/yourtest/YourTest";
+import IntershipCer from "./pages/intershipCer/IntershipCer";
 function App() {
   const UUU = useSelector((state) => state.authReducer.authData);
 
@@ -81,8 +83,19 @@ function App() {
             />
 
             <Route
+              path="/yourtests"
+              element={UUU ? <YourTest /> : <Navigate to="/registor" />}
+            />
+
+            {/* <Route path="/prevCertificate" element={<previewCertificate />} /> */}
+
+            <Route
               path="/certificate"
               element={UUU ? <Certificate /> : <Navigate to="/registor" />}
+            />
+            <Route
+              path="/intership"
+              element={UUU ? <IntershipCer /> : <Navigate to="/registor" />}
             />
           </Routes>
         </SideScreen>
