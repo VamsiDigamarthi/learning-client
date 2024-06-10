@@ -57,6 +57,7 @@
   font-family: "Annie Use Your Telescope", cursive;
   font-size: 8vw;
   color: #ff5c00;
+  font-family: 'micaroline regular', sans-serif;
 }
 
 .main-intership-cer > h3 {
@@ -113,6 +114,7 @@
 .main-intership-cer > p {
   font-weight: 600;
   line-height: 1.5;
+  font-family: sans-serif;
 }
 .center-text {
   text-align: center;

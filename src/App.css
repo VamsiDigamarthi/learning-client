@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+/* src/index.css or src/App.css */
+@font-face {
+  font-family: "MiCarolineRegular";
+  src: url("./fonts/micaroline-regular.otf") format("otf");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .App {
   width: 100%;
   display: flex;
