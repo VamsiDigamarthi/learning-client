@@ -3,9 +3,10 @@ import "./beforeexamtimer.css";
 import { useNavigate } from "react-router-dom";
 const BeforeExamTimer = ({
   examTime,
-
+  topic,
   setShowMainExam,
   setStartMainExamNotDisplaySideBar,
+  setStoreExamTopic,
   // requestFullScreen, //  request full screen mode
 }) => {
   const [timeDifference, setTimeDifference] = useState(
@@ -45,7 +46,10 @@ const BeforeExamTimer = ({
     // requestFullScreen(); //  request full screen mode
     // navigate("/main-exam", { state: { lan }, replace: true });
     // navigate("/main-exam", { replace: true });
+    setStoreExamTopic(topic);
   };
+
+  // console.log(topic);
 
   return (
     <>

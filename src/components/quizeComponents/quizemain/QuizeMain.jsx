@@ -20,8 +20,9 @@ const QuizeMain = ({ lanTofilterQuestions }) => {
   const [scoreModal, setScoreModal] = useState(false);
 
   useEffect(() => {
+    let v = "Python Introduction";
     APIS.get(
-      `/student/get/Specific/MCQ/lan/${lanTofilterQuestions}/head/${UUU?.head}`
+      `/student/get/Specific/MCQ/lan/${lanTofilterQuestions}/head/${UUU?.head}/topic/${v}`
     )
       .then((res) => {
         console.log(res.data);
@@ -47,7 +48,7 @@ const QuizeMain = ({ lanTofilterQuestions }) => {
     setScore(score);
   };
 
-  console.log(lanTofilterQuestions);
+  // console.log(lanTofilterQuestions);
 
   return (
     <div className="quize-mcq-main">

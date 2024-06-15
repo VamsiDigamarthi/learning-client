@@ -5,6 +5,7 @@
   padding: 30px;
   width: 100%;
   height: 100%;
+  /* position: relative; */
 }
 
 .time-display {
@@ -43,20 +44,53 @@
   gap: 2rem;
   align-items: center;
   justify-content: center;
+  overflow-y: scroll;
 }
 
 .single-lang-exam-timming {
-  width: 80%;
+  width: 100%;
   height: 60px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   /* background-color: lightgray; */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   border-radius: 10px;
   color: brown;
   padding: 0px 20px;
+  gap: 2rem;
+  position: relative;
 }
+
+.single-lang-exam-timming > :nth-child(1) {
+  width: 15%;
+  /* border: 2px solid red; */
+}
+
+.single-lang-exam-timming > :nth-child(2) {
+  width: 20%;
+  overflow: hidden;
+  /* border: 2px solid red; */
+}
+
+.single-lang-exam-timming > :nth-child(3) {
+  width: 20%;
+  overflow: hidden;
+  /* border: 2px solid red; */
+}
+/* .single-lang-exam-timming > :nth-child(4) {
+  width: 45%;
+  overflow: hidden;
+
+  border: 2px solid yellow;
+} */
+.single-lang-exam-timming-review-card {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  width: 20px;
+}
+
 .fullscreen-element {
   width: 100%;
   height: 100%;

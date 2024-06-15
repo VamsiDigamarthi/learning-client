@@ -151,17 +151,18 @@ const YourTest = () => {
   useEffect(() => {
     APIS.get(`/student/test/${UUU?._id}`)
       .then((res) => {
-        // console.log(res.data);
-        // setTests(res.data);
+        console.log(res.data);
+        setTests(res.data);
       })
       .catch((e) => {
         console.log(e);
       });
   }, []);
 
-  console.log(result);
+  // console.log(result);
 
   const openCloseQA = (language) => {
+    console.log(language);
     if (selectedLan !== language) {
       setSelectedLan(language);
     } else {
@@ -176,10 +177,12 @@ const YourTest = () => {
           {tests?.map((each, key) => (
             <div key={key} className="single-your-test">
               <div
-                onClick={() => openCloseQA(each.lan)}
+                onClick={() => openCloseQA(`${each.lan}-${each?.topic}`)}
                 className="show-lan-and-icon"
               >
-                <h3>{each.lan}</h3>
+                <h3>
+                  {each.lan} -- {each?.topic}
+                </h3>
                 {each.lan === selectedLan ? (
                   <IoIosArrowUp size={22} />
                 ) : (
@@ -190,7 +193,9 @@ const YourTest = () => {
                 <div
                   key={key}
                   className={`q-a-main-card ${
-                    each.lan === selectedLan ? "display-show" : "display-none"
+                    `${each.lan}-${each?.topic}` === selectedLan
+                      ? "display-show"
+                      : "display-none"
                   }`}
                 >
                   <h3>Q .. {question.question}</h3>

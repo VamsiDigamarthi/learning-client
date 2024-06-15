@@ -33,7 +33,7 @@ const StudentProfile = ({
   const getAllStudentFun = (mail) => {
     APIS.get(`/admin/fetch/Students/${mail}`)
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setAllStudents(res.data);
         setSelectedStudentOnLeft(res.data[0]);
       })
@@ -139,6 +139,7 @@ const StudentProfile = ({
           setAddExamModalOpen={setAddExamModalOpen} // close modal
           allStudents={allStudents} //send students data to filter langues student to give exam date
           getAllStudentFun={getAllStudentFun} // this function fetch all students == when exam assigned specific language
+          storeAdminEmails={storeAdminEmails}
         />
       )}
       {scoreDisplayModal && (

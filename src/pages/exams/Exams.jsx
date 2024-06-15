@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./exams.css";
-
+import { MdOutlineReviews } from "react-icons/md";
 import { APIS } from "../../core/apiurl";
 import { useSelector } from "react-redux";
 import ExamsNotAssignMessage from "../../components/examsComponents/examsnotassignmessage/ExamsNotAssignMessage";
 import BeforeExamTimer from "../../components/examsComponents/beforeExamTimer/BeforeExamTimer";
 import MainExam from "../../components/examsComponents/mainExam/MainExam";
+import ReviewModal from "../../modals/reviewModal/ReviewModal";
 const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
   const contentRef = useRef(null);
   const storeAnswerWithIdsRef = useRef([]);
-
+  const totalMarksWithRef = useRef([]);
   const totalTimeToDbRef = useRef("");
   const timeRef = useRef(null);
 
@@ -48,6 +49,12 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
   // store ids user see the question but not attempt any asnwer like ""orange"" color
   const [notAttemptAnswerShowQuestion, setNotAttemptAnswerShowQuestion] =
     useState([]);
+
+  // store topic which topi exam he writen
+  const [storeExamTopic, setStoreExamTopic] = useState("");
+
+  // review modal open state
+  const [reviewModalOpenState, setReviewModalOpenState] = useState(false);
 
   // ---------------------- main - exam states ----------------------------------
 
@@ -89,35 +96,49 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
 
   useEffect(() => {
     const fetchMcq = () => {
-      console.log(student?.examDetails?.[0]?.lan);
+      // console.log(student?.examDetails?.[0]?.lan);
+      // console.log(storeExamTopic);
       APIS.get(
-        `/student/get/Specific/MCQ/lan/${student?.examDetails?.[0]?.lan}/head/${UUU?.head}`
+        `/student/get/Specific/MCQ/lan/${student?.examDetails?.[0]?.lan}/head/${UUU?.head}/topic/${storeExamTopic}`
       )
         .then((res) => {
-          console.log(res.data);
-          setMcqSpecificLan(res.data);
+          // console.log(res.data);
+          let totalMarks = 0;
+          const shuffled = res.data?.sort(() => 0.5 - Math.random());
+          const selected = shuffled.slice(0, 10);
+          setMcqSpecificLan(selected);
+          selected?.forEach((each) => {
+            totalMarks += each.DefaultMarks;
+          });
+          // console.log(totalMarks);
+          // setTotalMarks(totalMarks);
+          totalMarksWithRef.current = totalMarks;
         })
         .catch((e) => {
           console.log(e);
         });
     };
-    Object.keys(student)?.length > 0 && fetchMcq();
-  }, [student]);
+    Object.keys(student)?.length > 0 &&
+      storeExamTopic?.length > 0 &&
+      fetchMcq();
+  }, [student, storeExamTopic]);
 
   // calculate total time based on each mcq second
+
   useEffect(() => {
+    // console.log(mcqSpecificLan?.length);
     const calTime = () => {
       let time = 0;
-      let totalMarks = 0;
+      // let totalMarks = 0;
 
       mcqSpecificLan?.forEach((each) => {
         time += each.DefaultTimeToSolve;
-        totalMarks += each.DefaultMarks;
+        // totalMarks += each.DefaultMarks;
       });
-
+      console.log(totalMarks);
       setTotalTime(time);
       setTime(time);
-      setTotalMarks(totalMarks);
+      // setTotalMarks(totalMarks);
 
       const hours = Math.floor(time / 3600);
       const minutes = Math.floor((time % 3600) / 60);
@@ -191,6 +212,8 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
     timeRef.current = time;
   }, [storeAnswerWithIds, time]);
 
+  // calculate total score
+
   // user click the answer button
   const userClickAnsweButton = (answer) => {
     if (answer !== null) {
@@ -241,7 +264,7 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
 
   // completed exam
   const completedExam = (lastQuestionScore = 0) => {
-    console.log(storeAnswerWithIds);
+    // console.log(totalMarks);
     // calculate time difference total time minute to how much time to writing exam
     const totalSeconds1 = parseTimeStringToSeconds(
       `${hours}:${minutes}:${seconds}`
@@ -258,9 +281,11 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
       lan: student?.examDetails?.[0]?.lan,
       score: score + lastQuestionScore,
       diffTimeString,
-      totalTimeToDb: totalTimeToDbRef.current,
-      totalMarks,
+      totalTimeToDb: timeRef.current,
+      totalMarks: totalMarksWithRef.current,
       completedDetails: storeAnswerWithIdsRef.current,
+      storeExamTopic: storeExamTopic,
+      // topic: storeExamTopic,
     };
 
     APIS.patch("/student/update/score", obj)
@@ -288,6 +313,12 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
   };
 
   // ============================ full screen exist =====================
+
+  // console.log(student);
+
+  const onReviewModalFun = () => {
+    setReviewModalOpenState(true);
+  };
 
   return (
     <div className="exam-main-card">
@@ -323,12 +354,13 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
           {student?.examDetails?.length > 0 ? (
             <div className="exam-assign-text-display-card">
               <h2>Exam is Assigned for your</h2>
-              <span>
+              {/* <span>
                 Plase wait patintly until completed any exam timming...!
-              </span>
+              </span> */}
               {student?.examDetails?.map((each, key) => (
                 <div key={key} className="single-lang-exam-timming">
                   <h3>{each?.lan}</h3>
+                  <h3>{each?.Topic}</h3>
                   <h3>
                     {each?.scoreDisplay && (
                       <span>
@@ -337,9 +369,18 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
                     )}
                   </h3>
                   {each?.examComplete ? (
-                    <h3>Exam is Completed</h3>
+                    <>
+                      <h3>Exam is Completed</h3>
+                      <span
+                        onClick={onReviewModalFun}
+                        className="single-lang-exam-timming-review-card"
+                      >
+                        <MdOutlineReviews size={25} />
+                      </span>
+                    </>
                   ) : (
                     <BeforeExamTimer
+                      topic={each.Topic}
                       lan={each.lan}
                       examTime={new Date(each?.dateAndTime)}
                       setShowMainExam={setShowMainExam} // this is state fun show main exam access full screen
@@ -347,6 +388,8 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
                         setStartMainExamNotDisplaySideBar
                       } // main exam start not display side bar
                       // requestFullScreen={requestFullScreen} //  request full screen mode
+
+                      setStoreExamTopic={setStoreExamTopic}
                     />
                   )}
                 </div>
@@ -357,6 +400,8 @@ const Exams = ({ setStartMainExamNotDisplaySideBar }) => {
           )}
         </>
       )}
+      {/* review modal */}
+      {/* {reviewModalOpenState && <ReviewModal />} */}
     </div>
   );
 };

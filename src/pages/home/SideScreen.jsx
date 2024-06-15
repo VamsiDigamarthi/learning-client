@@ -77,19 +77,19 @@ const SideScreen = ({ startMainExamNotDisplaySideBar, children }) => {
               </Link>
             )}
 
-            {UUU?.role === 3 && (
+            {/* {UUU?.role === 3 && (
               <Link to="/certificate" className="link-card">
                 <PiCertificateThin />
                 <span>certificate</span>
               </Link>
-            )}
-
+            )} */}
+            {/* 
             {UUU?.role === 3 && (
               <Link to="/intership" className="link-card">
                 <SiPytest />
                 <span>Intership certificate</span>
               </Link>
-            )}
+            )} */}
 
             {UUU?.role === 3 && (
               <Link to="/yourtests" className="link-card">

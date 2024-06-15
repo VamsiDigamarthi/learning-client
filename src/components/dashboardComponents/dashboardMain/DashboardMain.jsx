@@ -4,6 +4,7 @@ import StudentProfile from "./studentProfiles/studentprofile/StudentProfile";
 import LangsroceCard from "./langsrocedisplaycard/LangsroceCard";
 const DashboardMain = () => {
   const [selectedStudentOnLeft, setSelectedStudentOnLeft] = useState();
+  console.log(selectedStudentOnLeft?.examDetails);
   return (
     <div className="dashboard-main-page">
       <div className="dash-board-first-card">
@@ -16,11 +17,7 @@ const DashboardMain = () => {
             {selectedStudentOnLeft?.examDetails?.length ? (
               <>
                 {selectedStudentOnLeft?.examDetails?.map((each, key) => (
-                  <LangsroceCard
-                    key={key}
-                    scrore={each}
-                    examDetails={each}
-                  />
+                  <LangsroceCard key={key} scrore={each} examDetails={each} />
                 ))}
               </>
             ) : (

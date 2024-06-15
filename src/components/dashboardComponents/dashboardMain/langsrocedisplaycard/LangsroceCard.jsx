@@ -23,6 +23,7 @@ const LangsroceCard = ({ examDetails }) => {
           </div>
         )}
       </div>
+      <p className="exam-topic">{examDetails?.Topic}</p>
       <div className="slider-bar-card">
         <p></p>
         <p
